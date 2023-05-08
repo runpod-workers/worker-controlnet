@@ -49,4 +49,4 @@ jobs:
         with:
           build-args: MODEL_TYPE=${{ matrix.model_type }}
           push: true
-          tags: ${{ secrets.DOCKERHUB_REPO }}/${{ secrets.DOCKERHUB_IMG }}:dev
+          tags: ${{ secrets.DOCKERHUB_REPO }}/${{ secrets.DOCKERHUB_IMG }}:${{ matrix.model_type }}-dev

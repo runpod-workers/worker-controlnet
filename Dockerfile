@@ -3,8 +3,9 @@ FROM ${BASE_IMAGE} as dev-base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-WORKDIR /
+WORKDIR /src
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND noninteractive\
     SHELL=/bin/bash
 RUN apt-key del 7fa2af80
@@ -33,7 +34,7 @@ ENV PATH=/venv/bin:$PATH
 # Install system dependencies
 RUN apt-get install python3-opencv -y
 
-# Can not have requirements.txt as packages need to be installed in a specific order
+# Install Python dependencies
 RUN python3.8 -m pip install --upgrade pip==20.3
 RUN python3.8 -m pip install basicsr==1.4.2
 RUN python3.8 -m pip install torch==1.13.0
