@@ -7,6 +7,22 @@ on:
 
 jobs:
   docker:
+    strategy:
+      matrix:
+        model_type:
+          [
+            "openpose",
+            "seg",
+            "scribble",
+            "mlsd",
+            "normal",
+            "mlsd",
+            "normal",
+            "hed",
+            "depth",
+            "canny",
+          ]
+
     runs-on: ubuntu-latest
     steps:
       - name: Clear Space
@@ -31,5 +47,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
+          build-args: MODEL_TYPE=${{ matrix.model_type }}
           push: true
           tags: ${{ secrets.DOCKERHUB_REPO }}/${{ secrets.DOCKERHUB_IMG }}:dev
