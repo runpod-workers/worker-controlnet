@@ -14,11 +14,11 @@ RUN apt-get update --yes && \
     software-properties-common
 
 # Add deadsnakes repository for Python 3.8
-RUN add-apt-repository ppa:deadsnakes/ppa
+RUN add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update
 
 # Install Python 3.8 and related packages
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get install -y --no-install-recommends \
     python3.8 \
     python3-pip \
     python3.8-distutils \
