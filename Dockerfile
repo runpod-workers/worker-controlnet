@@ -4,6 +4,16 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /
 
+# Update System Requirements
+RUN apt-get update --yes && \
+    apt-get upgrade --yes && \
+    apt install --yes --no-install-recommends\
+    wget\
+    bash\
+    openssh-server &&\
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+
 # Install Python 3.8
 RUN apt-get update && apt-get install -y --no-install-recommends
 RUN apt-get install software-properties-common -y
