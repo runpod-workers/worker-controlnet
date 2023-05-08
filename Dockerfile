@@ -41,6 +41,9 @@ ADD src .
 ARG MODEL_TYPE="openpose"
 ENV MODEL_TYPE=${MODEL_TYPE}
 
+# Download weights
+COPY builder/download_weights.py .
 RUN python3.8 download_weights.py --model_type="${MODEL_TYPE}"
+RUN rm download_weights.py
 
 CMD python3.8 -u runpod_infer.py --model_type="${MODEL_TYPE}"
