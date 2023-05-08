@@ -13,6 +13,9 @@ RUN apt-get update --yes && \
     openssh-server \
     software-properties-common
 
+# Reinstall python3-apt
+RUN apt-get install --reinstall python3-apt -y
+
 # Add deadsnakes repository for Python 3.8
 RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update
