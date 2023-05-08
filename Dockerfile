@@ -15,6 +15,8 @@ RUN apt-get update --yes && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
 # Install Python 3.8
+RUN apt remove python3-apt -y
+RUN apt install python3-apt -y
 RUN apt-get update && apt-get install -y --no-install-recommends
 RUN apt-get install software-properties-common -y
 RUN add-apt-repository ppa:deadsnakes/ppa
