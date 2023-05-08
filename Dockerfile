@@ -16,7 +16,6 @@ RUN apt-get update --yes && \
 
 # Install Python 3.8
 RUN apt remove python3-apt -y
-RUN apt install python3-apt -y
 RUN apt-get update && apt-get install -y --no-install-recommends
 RUN apt-get install software-properties-common -y
 RUN add-apt-repository ppa:deadsnakes/ppa
