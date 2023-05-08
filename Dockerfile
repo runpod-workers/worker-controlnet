@@ -37,6 +37,7 @@ RUN apt-get install python3-opencv -y
 # Install Python dependencies
 RUN python3.8 -m pip install --upgrade pip==20.3
 RUN python3.8 -m pip install wheel
+RUN python3.8 -m pip install setuptools
 RUN python3.8 -m pip install basicsr==1.4.2
 RUN python3.8 -m pip install torch==1.13.0
 RUN python3.8 -m pip install torchvision==0.14.0
