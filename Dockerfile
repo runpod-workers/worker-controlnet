@@ -1,33 +1,32 @@
-FROM runpod/pytorch:3.10-2.0.0-117
+ARG BASE_IMAGE=nvidia/cuda:11.6.2-cudnn8-devel-ubuntu20.04
+FROM ${BASE_IMAGE} as dev-base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /
 
-# Update System Requirements
+ENV DEBIAN_FRONTEND noninteractive\
+    SHELL=/bin/bash
+RUN apt-key del 7fa2af80
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
 RUN apt-get update --yes && \
     apt-get upgrade --yes && \
-    apt install --yes --no-install-recommends \
-    wget \
-    bash \
-    openssh-server \
-    software-properties-common
+    apt install --yes --no-install-recommends\
+    wget\
+    bash\
+    openssh-server &&\
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
-# Reinstall python3-apt
-RUN apt-get install --reinstall python3-apt -y
+RUN apt-get update && apt-get install -y --no-install-recommends
+RUN apt-get install software-properties-common -y
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get install python3.8 -y
+RUN apt-get install python3-pip -y
+RUN apt-get install python3.8-distutils -y
 
-# Add deadsnakes repository for Python 3.8
-RUN add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update
-
-# Install Python 3.8 and related packages
-RUN apt-get install -y --no-install-recommends \
-    python3.8 \
-    python3-pip \
-    python3.8-distutils \
-    python3.8-dev \
-    python3.8-venv
-
+RUN apt-get install python3.8-dev -y
+RUN apt-get install python3.8-venv -y
 RUN python3.8 -m venv /venv
 ENV PATH=/venv/bin:$PATH
 
